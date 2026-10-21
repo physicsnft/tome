@@ -24,7 +24,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
       - run: npm ci
       - name: Build the web player
         run: npm run build -w @tome/player-web
