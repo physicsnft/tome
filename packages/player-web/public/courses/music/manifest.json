@@ -1,0 +1,49 @@
+{
+  "formatVersion": "1.0.0-rc.1",
+  "id": "courses.tome.reading-music",
+  "version": "0.1.2",
+  "title": "Reading Music: First Steps",
+  "subtitle": "The staff, the keyboard, and your first melodies",
+  "description": "Learn to read notation and find the notes under your fingers. Every example plays; every exercise is answered on a keyboard or on the score itself. All music is in the public domain (traditional tunes, Beethoven, Bach). No instrument needed — a device with sound is enough.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "music",
+    "theory"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 55,
+  "assetsByAuthor": true,
+  "cover": "assets/images/cover.png",
+  "uses": [
+    "music"
+  ],
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "staff",
+      "title": "Notes on the staff",
+      "lessons": [
+        "lessons/01-the-staff.md",
+        "lessons/02-the-keyboard.md"
+      ]
+    },
+    {
+      "id": "tunes",
+      "title": "Playing tunes",
+      "lessons": [
+        "lessons/03-scales-and-tunes.md"
+      ]
+    }
+  ],
+  "contentHashes": {
+    "assets/images/cover.png": "sha256:49d36153fa0e54f0aa4700fb720e61652fde99e48c98c083b50d6057bfe65063",
+    "lessons/01-the-staff.md": "sha256:9d6dc8e1edd47a31a4021663c78a3d71d4cebc3a91e1ca6192e0747f6c090d4a",
+    "lessons/02-the-keyboard.md": "sha256:ce218b3425867ca653d8a8115958c8319af5547b467fca033474ff18963f25d6",
+    "lessons/03-scales-and-tunes.md": "sha256:53b7a7e64788a865652fc43d8e4a075ba825b92783e95d07072a064c9023c87c"
+  }
+}

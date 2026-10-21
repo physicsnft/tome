@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 260" width="320" height="260">
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker></defs>
+  <g stroke="#cbd5e1" stroke-width="1">
+    <path d="M40 220 H300 M40 220 V20"/>
+    <g stroke-dasharray="3 3"><path d="M90 220 V20 M140 220 V20 M190 220 V20 M240 220 V20 M40 170 H300 M40 120 H300 M40 70 H300"/></g>
+  </g>
+  <line x1="40" y1="220" x2="190" y2="20" stroke="#2563eb" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M40 220 H190 V20" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="6 4"/>
+  <g font-family="sans-serif" font-size="14" fill="#334155">
+    <text x="110" y="240">3</text><text x="198" y="125">4</text>
+    <text x="100" y="105" fill="#2563eb" font-weight="bold">v = (3, 4)</text>
+    <text x="30" y="238">0</text>
+  </g>
+</svg>

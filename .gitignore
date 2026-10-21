@@ -1,0 +1,15 @@
+node_modules/
+dist/
+packages/cli/player/
+*.tgz
+# Signing keys: never in the repository. Keep them in a password manager or a secrets store.
+keys/
+*.jks
+*.keystore
+keystore.properties
+# Local settings and anything private
+.env.local
+.env.*.local
+*.log
+# The website lives in its own (private) repository
+site/

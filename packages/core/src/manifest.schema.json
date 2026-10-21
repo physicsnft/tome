@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.example.com/course/0.2/manifest.schema.json",
+  "title": "Course Manifest",
+  "description": "Schema for manifest.json at the root of a .course bundle (Course Format Spec 0.2.x, \u00a73).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "formatVersion",
+    "id",
+    "version",
+    "title",
+    "description",
+    "language",
+    "authors",
+    "cover",
+    "structure",
+    "contentHashes"
+  ],
+  "properties": {
+    "formatVersion": {
+      "type": "string",
+      "description": "Version of the Course Format Spec this bundle conforms to. 0.2\u20130.6 are the pre-freeze drafts; 1.0.0-rc.1 is the frozen format.",
+      "pattern": "^(0\\.[2-6]\\.[0-9]+|1\\.0\\.0(-rc\\.[0-9]+)?)$"
+    },
+    "id": {
+      "type": "string",
+      "description": "Reverse-DNS style identifier. Immutable for the life of the course.",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "maxLength": 200
+    },
+    "version": {
+      "$ref": "#/$defs/semver",
+      "description": "Course content version."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "subtitle": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "language": {
+      "type": "string",
+      "description": "BCP 47 language tag.",
+      "pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/author"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+        "maxLength": 40
+      }
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ]
+    },
+    "estimatedMinutes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+    },
+    "cover": {
+      "$ref": "#/$defs/imagePath"
+    },
+    "minPlayerVersion": {
+      "$ref": "#/$defs/semver"
+    },
+    "structure": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {
+        "$ref": "#/$defs/chapter"
+      }
+    },
+    "contentHashes": {
+      "type": "object",
+      "description": "sha256 hash of every file in the bundle except manifest.json and signature.json.",
+      "minProperties": 1,
+      "propertyNames": {
+        "$ref": "#/$defs/bundlePath"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      }
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier or \"all-rights-reserved\".",
+      "default": "all-rights-reserved",
+      "maxLength": 100
+    },
+    "changelog": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "bestOn": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "phone",
+          "tablet",
+          "desktop"
+        ]
+      }
+    },
+    "uses": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "microphone",
+          "drawing",
+          "audio",
+          "music"
+        ]
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "audioWithoutTranscript": {
+          "type": "boolean"
+        }
+      }
+    },
+    "assetsByAuthor": {
+      "type": "boolean",
+      "default": false,
+      "description": "Every image, audio and video asset is the authors' own work."
+    },
+    "credits": {
+      "type": "array",
+      "maxItems": 500,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "asset",
+          "creator"
+        ],
+        "properties": {
+          "asset": {
+            "type": "string",
+            "pattern": "^assets/[A-Za-z0-9._/-]+$"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "creator": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "source": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "license": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "modified": {
+            "type": "string",
+            "maxLength": 300
+          }
+        }
+      }
+    },
+    "$schema": {
+      "type": "string",
+      "description": "Optional and ignored. Present so editors can offer completion and inline errors on manifest.json.in."
+    },
+    "issuedTo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "order",
+        "subject",
+        "issuedAt"
+      ],
+      "description": "Added by the store to a purchased copy (\u00a73.4): who this copy was issued to. Covered by the signature. Authors never write it.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60,
+          "pattern": "^[^@]*$",
+          "description": "Optional display name the buyer chose for their copies. Never an email address."
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Opaque account id, or the anonymous id of the install that bought it. Never an email address.",
+          "pattern": "^[^@]*$"
+        },
+        "order": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "The order this copy was issued for: what traces a shared copy back to a purchase."
+        },
+        "issuedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
+    },
+    "bundlePath": {
+      "type": "string",
+      "description": "Relative path inside the bundle. No leading slash, no '..', no backslashes.",
+      "pattern": "^(?!\\.\\.?/)(?!.*/\\.\\.?(/|$))[A-Za-z0-9._-]+(/[A-Za-z0-9._-]+)*$",
+      "maxLength": 255
+    },
+    "imagePath": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/bundlePath"
+        },
+        {
+          "pattern": "^assets/images/.+\\.(png|jpg|jpeg|webp|svg)$"
+        }
+      ]
+    },
+    "lessonPath": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/bundlePath"
+        },
+        {
+          "pattern": "^lessons/[A-Za-z0-9._-]+\\.md$"
+        }
+      ]
+    },
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^author_[A-Za-z0-9]+$",
+          "description": "Platform author ID. Assigned by the platform; omit for unpublished drafts."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        }
+      }
+    },
+    "chapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "lessons"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "maxLength": 64
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "lessons": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/lessonPath"
+          }
+        }
+      }
+    }
+  }
+}

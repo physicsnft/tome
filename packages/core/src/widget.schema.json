@@ -1,0 +1,2971 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.example.com/course/0.2/widget.schema.json",
+  "title": "Tome widget (0.6.0)",
+  "description": "Schema for the body of a :::widget directive (YAML or JSON, parsed to an object), merged with its directive attributes (type, id, ref, required). Course Format Spec 0.2.x, §7. Discriminated on `type`.",
+  "type": "object",
+  "required": [
+    "type",
+    "id"
+  ],
+  "properties": {
+    "type": {
+      "$ref": "#/$defs/widgetType"
+    },
+    "id": {
+      "$ref": "#/$defs/widgetId"
+    },
+    "ref": {
+      "$ref": "#/$defs/widgetRefPath"
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Must be completed to pass the next checkpoint. Defaults: true for graded widgets, false otherwise."
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/multipleChoice"
+    },
+    {
+      "$ref": "#/$defs/numericInput"
+    },
+    {
+      "$ref": "#/$defs/freeText"
+    },
+    {
+      "$ref": "#/$defs/fillBlank"
+    },
+    {
+      "$ref": "#/$defs/ordering"
+    },
+    {
+      "$ref": "#/$defs/matching"
+    },
+    {
+      "$ref": "#/$defs/sliderExplore"
+    },
+    {
+      "$ref": "#/$defs/plot"
+    },
+    {
+      "$ref": "#/$defs/codeExercise"
+    },
+    {
+      "$ref": "#/$defs/flashcards"
+    },
+    {
+      "$ref": "#/$defs/diagram"
+    },
+    {
+      "$ref": "#/$defs/geometry"
+    },
+    {
+      "$ref": "#/$defs/dictation"
+    },
+    {
+      "$ref": "#/$defs/record"
+    },
+    {
+      "$ref": "#/$defs/sketch"
+    },
+    {
+      "$ref": "#/$defs/board"
+    },
+    {
+      "$ref": "#/$defs/score"
+    },
+    {
+      "$ref": "#/$defs/keyboard"
+    },
+    {
+      "$ref": "#/$defs/hotspot"
+    },
+    {
+      "$ref": "#/$defs/tableInput"
+    },
+    {
+      "$ref": "#/$defs/molecule"
+    },
+    {
+      "$ref": "#/$defs/simulation"
+    }
+  ],
+  "$defs": {
+    "widgetType": {
+      "type": "string",
+      "enum": [
+        "multiple-choice",
+        "numeric-input",
+        "free-text",
+        "fill-blank",
+        "ordering",
+        "matching",
+        "slider-explore",
+        "plot",
+        "code-exercise",
+        "flashcards",
+        "diagram",
+        "geometry",
+        "dictation",
+        "record",
+        "sketch",
+        "board",
+        "score",
+        "keyboard",
+        "hotspot",
+        "table-input",
+        "molecule",
+        "simulation"
+      ]
+    },
+    "widgetId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 64
+    },
+    "widgetRefPath": {
+      "type": "string",
+      "pattern": "^widgets/[A-Za-z0-9._-]+(/[A-Za-z0-9._-]+)*\\.(json|yaml|yml)$"
+    },
+    "inlineMarkdown": {
+      "type": "string",
+      "description": "Inline Markdown only: emphasis, code, math, links. No block elements or directives.",
+      "maxLength": 5000
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$",
+      "maxLength": 32
+    },
+    "expression": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        }
+      ],
+      "description": "Expression in the §7.5 expression language (numbers are also accepted). Syntax is checked by the validator."
+    },
+    "range": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "[min, max]"
+    },
+    "common": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/widgetId"
+        },
+        "ref": false,
+        "required": {
+          "type": "boolean"
+        },
+        "audio": {
+          "$ref": "#/$defs/media"
+        }
+      }
+    },
+    "multipleChoice": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "options"
+      ],
+      "properties": {
+        "type": {
+          "const": "multiple-choice"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "contains": {
+            "properties": {
+              "correct": {
+                "const": true
+              }
+            },
+            "required": [
+              "correct"
+            ]
+          },
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "text"
+            ],
+            "properties": {
+              "text": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "correct": {
+                "type": "boolean",
+                "default": false
+              },
+              "explanation": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "audio": {
+                "$ref": "#/$defs/media"
+              }
+            }
+          }
+        },
+        "multiple": {
+          "type": "boolean",
+          "default": false
+        },
+        "shuffle": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "numericInput": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "answer"
+      ],
+      "properties": {
+        "type": {
+          "const": "numeric-input"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "answer": {
+          "type": "number"
+        },
+        "tolerance": {
+          "type": "number",
+          "minimum": 0,
+          "default": 0
+        },
+        "relativeTolerance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 20
+        }
+      }
+    },
+    "freeText": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "if": {
+            "properties": {
+              "grading": {
+                "const": "keywords"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "keywords"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "grading": {
+                "const": "pattern"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "pattern"
+            ]
+          }
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "grading"
+      ],
+      "properties": {
+        "type": {
+          "const": "free-text"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "grading": {
+          "type": "string",
+          "enum": [
+            "self",
+            "keywords",
+            "pattern"
+          ]
+        },
+        "keywords": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "pattern": {
+          "type": "string",
+          "description": "RE2-compatible regular expression.",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "modelAnswer": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "minLength": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxLength": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        }
+      }
+    },
+    "fillBlank": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "fill-blank"
+        },
+        "text": {
+          "type": "string",
+          "description": "Inline Markdown with blanks: {{answer|alt}} for text, {{=1.5}} or {{=1.5~0.01}} for numeric with tolerance. Must contain at least one blank.",
+          "pattern": "\\{\\{[^{}]+\\}\\}",
+          "maxLength": 5000
+        },
+        "caseSensitive": {
+          "type": "boolean",
+          "default": false
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        }
+      }
+    },
+    "ordering": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "ordering"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        }
+      }
+    },
+    "matching": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "pairs"
+      ],
+      "properties": {
+        "type": {
+          "const": "matching"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "pairs": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "left",
+              "right"
+            ],
+            "properties": {
+              "left": {
+                "$ref": "#/$defs/item"
+              },
+              "right": {
+                "$ref": "#/$defs/item"
+              }
+            }
+          }
+        }
+      }
+    },
+    "sliderExplore": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "required": [
+        "type",
+        "params"
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "plot"
+          ]
+        },
+        {
+          "required": [
+            "outputs"
+          ]
+        },
+        {
+          "required": [
+            "geometry"
+          ]
+        }
+      ],
+      "properties": {
+        "type": {
+          "const": "slider-explore"
+        },
+        "params": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "min",
+              "max"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/identifier"
+              },
+              "label": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              },
+              "step": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "default": {
+                "type": "number"
+              },
+              "value": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "plot": {
+          "$ref": "#/$defs/plotSpec"
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "expr"
+            ],
+            "properties": {
+              "label": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "expr": {
+                "$ref": "#/$defs/expression"
+              },
+              "precision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10,
+                "default": 2
+              },
+              "suffix": {
+                "type": "string",
+                "maxLength": 10
+              }
+            }
+          }
+        },
+        "caption": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "geometry": {
+          "$ref": "#/$defs/scene"
+        }
+      }
+    },
+    "plotSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "expr"
+          ]
+        },
+        {
+          "required": [
+            "series"
+          ]
+        }
+      ],
+      "properties": {
+        "expr": {
+          "$ref": "#/$defs/expression"
+        },
+        "series": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "expr"
+                ]
+              },
+              {
+                "required": [
+                  "points"
+                ]
+              }
+            ],
+            "properties": {
+              "expr": {
+                "$ref": "#/$defs/expression"
+              },
+              "points": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 10000,
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "label": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "style": {
+                "type": "string",
+                "enum": [
+                  "line",
+                  "dashed",
+                  "dots",
+                  "bars",
+                  "area"
+                ],
+                "default": "line"
+              }
+            }
+          }
+        },
+        "x": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/range"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "labels"
+              ],
+              "properties": {
+                "labels": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 100,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "label": {
+                  "$ref": "#/$defs/inlineMarkdown"
+                }
+              }
+            }
+          ]
+        },
+        "y": {
+          "$ref": "#/$defs/range"
+        },
+        "samples": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 10000,
+          "default": 200
+        },
+        "axes": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "xLabel": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "yLabel": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "grid": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "caption": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "source": {
+          "$ref": "#/$defs/inlineMarkdown"
+        }
+      }
+    },
+    "plot": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "required": [
+        "type",
+        "series",
+        "x"
+      ],
+      "properties": {
+        "type": {
+          "const": "plot"
+        },
+        "series": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "required": [
+                  "expr"
+                ]
+              },
+              {
+                "required": [
+                  "points"
+                ]
+              }
+            ],
+            "properties": {
+              "expr": {
+                "$ref": "#/$defs/expression"
+              },
+              "points": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 10000,
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "label": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "style": {
+                "type": "string",
+                "enum": [
+                  "line",
+                  "dashed",
+                  "dots",
+                  "bars",
+                  "area"
+                ],
+                "default": "line"
+              }
+            }
+          }
+        },
+        "x": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/range"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "labels"
+              ],
+              "properties": {
+                "labels": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 100,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "label": {
+                  "$ref": "#/$defs/inlineMarkdown"
+                }
+              }
+            }
+          ]
+        },
+        "y": {
+          "$ref": "#/$defs/range"
+        },
+        "samples": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 10000,
+          "default": 200
+        },
+        "axes": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "xLabel": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "yLabel": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "grid": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "caption": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "source": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        }
+      }
+    },
+    "codeExercise": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "if": {
+            "properties": {
+              "grading": {
+                "const": "output"
+              }
+            },
+            "required": [
+              "grading"
+            ]
+          },
+          "then": {
+            "required": [
+              "cases"
+            ]
+          },
+          "else": {
+            "required": [
+              "tests"
+            ]
+          }
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "language",
+        "prompt"
+      ],
+      "properties": {
+        "type": {
+          "const": "code-exercise"
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "python",
+            "javascript"
+          ]
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "starterCode": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "files": false,
+        "stdin": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "grading": {
+          "type": "string",
+          "enum": [
+            "tests",
+            "output"
+          ],
+          "default": "tests"
+        },
+        "tests": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 50,
+          "items": {
+            "$ref": "#/$defs/codeTest"
+          }
+        },
+        "outputMatch": {
+          "type": "string",
+          "enum": [
+            "exact",
+            "trimmed",
+            "lines"
+          ],
+          "default": "trimmed"
+        },
+        "solution": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "hints": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/inlineMarkdown"
+          }
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "timeoutMs": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 10000,
+              "default": 5000
+            },
+            "memoryMb": {
+              "type": "integer",
+              "minimum": 16,
+              "maximum": 256,
+              "default": 128
+            }
+          }
+        },
+        "resetable": {
+          "type": "boolean",
+          "default": true
+        },
+        "cases": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 50,
+          "items": {
+            "$ref": "#/$defs/outputCase"
+          }
+        }
+      }
+    },
+    "codeTest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "code"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "hidden": {
+          "type": "boolean",
+          "default": false
+        },
+        "stdin": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 10000
+        }
+      }
+    },
+    "flashcards": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        }
+      ],
+      "required": [
+        "type",
+        "cards"
+      ],
+      "properties": {
+        "type": {
+          "const": "flashcards"
+        },
+        "cards": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "front",
+              "back"
+            ],
+            "properties": {
+              "front": {
+                "$ref": "#/$defs/item"
+              },
+              "back": {
+                "$ref": "#/$defs/item"
+              }
+            }
+          }
+        },
+        "spaced": {
+          "type": "boolean",
+          "default": false
+        },
+        "shuffle": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "diagram": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "diagram"
+        }
+      },
+      "not": {
+        "required": [
+          "type"
+        ]
+      },
+      "$comment": "Reserved but unimplemented in 1.0: always fails, so a course cannot ship a widget no player renders."
+    },
+    "blockMarkdown": {
+      "type": "string",
+      "description": "Block Markdown: paragraphs, lists, code blocks, tables, math. No directives.",
+      "minLength": 1,
+      "maxLength": 20000
+    },
+    "color": {
+      "type": "string",
+      "enum": [
+        "primary",
+        "secondary",
+        "accent",
+        "muted",
+        "red",
+        "green",
+        "blue",
+        "orange"
+      ]
+    },
+    "coord": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/expression"
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "[x, y] as expressions"
+    },
+    "shape": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "at"
+          ],
+          "properties": {
+            "kind": {
+              "const": "point"
+            },
+            "color": {
+              "$ref": "#/$defs/color"
+            },
+            "at": {
+              "$ref": "#/$defs/coord"
+            },
+            "label": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "bind": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/identifier"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "to"
+          ],
+          "properties": {
+            "kind": {
+              "const": "vector"
+            },
+            "color": {
+              "$ref": "#/$defs/color"
+            },
+            "from": {
+              "$ref": "#/$defs/coord"
+            },
+            "to": {
+              "$ref": "#/$defs/coord"
+            },
+            "label": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "dashed": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "from",
+            "to"
+          ],
+          "properties": {
+            "kind": {
+              "const": "segment"
+            },
+            "color": {
+              "$ref": "#/$defs/color"
+            },
+            "from": {
+              "$ref": "#/$defs/coord"
+            },
+            "to": {
+              "$ref": "#/$defs/coord"
+            },
+            "label": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "dashed": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "through",
+            "direction"
+          ],
+          "properties": {
+            "kind": {
+              "const": "line"
+            },
+            "color": {
+              "$ref": "#/$defs/color"
+            },
+            "through": {
+              "$ref": "#/$defs/coord"
+            },
+            "direction": {
+              "$ref": "#/$defs/coord"
+            },
+            "dashed": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "center",
+            "radius"
+          ],
+          "properties": {
+            "kind": {
+              "const": "circle"
+            },
+            "color": {
+              "$ref": "#/$defs/color"
+            },
+            "center": {
+              "$ref": "#/$defs/coord"
+            },
+            "radius": {
+              "$ref": "#/$defs/expression"
+            },
+            "fill": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "points"
+          ],
+          "properties": {
+            "kind": {
+              "const": "polygon"
+            },
+            "color": {
+              "$ref": "#/$defs/color"
+            },
+            "points": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/coord"
+              },
+              "minItems": 3,
+              "maxItems": 100
+            },
+            "fill": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "center",
+            "radius",
+            "from",
+            "to"
+          ],
+          "properties": {
+            "kind": {
+              "const": "arc"
+            },
+            "color": {
+              "$ref": "#/$defs/color"
+            },
+            "center": {
+              "$ref": "#/$defs/coord"
+            },
+            "radius": {
+              "$ref": "#/$defs/expression"
+            },
+            "from": {
+              "$ref": "#/$defs/expression"
+            },
+            "to": {
+              "$ref": "#/$defs/expression"
+            },
+            "label": {
+              "$ref": "#/$defs/inlineMarkdown"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "at",
+            "text"
+          ],
+          "properties": {
+            "kind": {
+              "const": "text"
+            },
+            "color": {
+              "$ref": "#/$defs/color"
+            },
+            "at": {
+              "$ref": "#/$defs/coord"
+            },
+            "text": {
+              "$ref": "#/$defs/inlineMarkdown"
+            }
+          }
+        }
+      ],
+      "discriminator": {
+        "propertyName": "kind"
+      },
+      "type": "object"
+    },
+    "scene": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/sceneProperties"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "geometry": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/sceneProperties"
+        }
+      ],
+      "required": [
+        "type",
+        "view",
+        "shapes"
+      ],
+      "properties": {
+        "type": {
+          "const": "geometry"
+        },
+        "params": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "min",
+              "max"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/identifier"
+              },
+              "label": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              },
+              "step": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "default": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        }
+      }
+    },
+    "outputCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expectedOutput"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "stdin": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "expectedOutput": {
+          "type": "string",
+          "maxLength": 100000
+        },
+        "hidden": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "sceneProperties": {
+      "type": "object",
+      "required": [
+        "view",
+        "shapes"
+      ],
+      "properties": {
+        "view": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "x",
+            "y"
+          ],
+          "properties": {
+            "x": {
+              "$ref": "#/$defs/range"
+            },
+            "y": {
+              "$ref": "#/$defs/range"
+            },
+            "grid": {
+              "type": "boolean",
+              "default": true
+            },
+            "axes": {
+              "type": "boolean",
+              "default": true
+            },
+            "aspect": {
+              "type": "string",
+              "enum": [
+                "equal",
+                "auto"
+              ],
+              "default": "equal"
+            }
+          }
+        },
+        "shapes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/shape"
+          }
+        },
+        "caption": {
+          "$ref": "#/$defs/inlineMarkdown"
+        }
+      }
+    },
+    "assetAudio": {
+      "type": "string",
+      "pattern": "^assets/[A-Za-z0-9._/-]+\\.(mp3|m4a|ogg)$"
+    },
+    "assetImage": {
+      "type": "string",
+      "pattern": "^assets/[A-Za-z0-9._/-]+\\.(png|jpg|jpeg|webp|svg)$"
+    },
+    "media": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/assetAudio"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "src"
+          ],
+          "properties": {
+            "src": {
+              "$ref": "#/$defs/assetAudio"
+            },
+            "transcript": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "transcriptAfter": {
+              "type": "string",
+              "enum": [
+                "always",
+                "complete",
+                "never"
+              ],
+              "default": "complete"
+            },
+            "playLimit": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "speed": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0.5,
+                "maximum": 2
+              },
+              "minItems": 1,
+              "maxItems": 4
+            }
+          }
+        }
+      ]
+    },
+    "item": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "$ref": "#/$defs/inlineMarkdown"
+            },
+            "audio": {
+              "$ref": "#/$defs/media"
+            }
+          }
+        }
+      ]
+    },
+    "dictation": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "audio",
+        "answer"
+      ],
+      "properties": {
+        "type": {
+          "const": "dictation"
+        },
+        "audio": {
+          "$ref": "#/$defs/media"
+        },
+        "answer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 10
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "ignoreCase": {
+          "type": "boolean",
+          "default": true
+        },
+        "ignorePunctuation": {
+          "type": "boolean",
+          "default": true
+        },
+        "ignoreAccents": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt"
+      ],
+      "properties": {
+        "type": {
+          "const": "record"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "model": {
+          "$ref": "#/$defs/media"
+        },
+        "maxSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "default": 30
+        },
+        "rubric": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/inlineMarkdown"
+          },
+          "maxItems": 8
+        },
+        "grading": {
+          "type": "string",
+          "enum": [
+            "self"
+          ],
+          "default": "self"
+        }
+      }
+    },
+    "sketch": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt"
+      ],
+      "properties": {
+        "type": {
+          "const": "sketch"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "canvas": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "width",
+            "height"
+          ],
+          "properties": {
+            "width": {
+              "type": "integer",
+              "minimum": 64,
+              "maximum": 2048
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 64,
+              "maximum": 2048
+            }
+          }
+        },
+        "reference": {
+          "$ref": "#/$defs/assetImage"
+        },
+        "trace": {
+          "$ref": "#/$defs/assetImage"
+        },
+        "traceOpacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.3
+        },
+        "model": {
+          "$ref": "#/$defs/assetImage"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "pen",
+              "eraser",
+              "fill"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "palette": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "minItems": 1,
+          "maxItems": 12
+        },
+        "widths": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 64
+          },
+          "minItems": 1,
+          "maxItems": 6
+        },
+        "pressure": {
+          "type": "boolean",
+          "default": true
+        },
+        "rubric": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/inlineMarkdown"
+          },
+          "maxItems": 8
+        },
+        "minStrokes": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 1
+        },
+        "grading": {
+          "type": "string",
+          "enum": [
+            "self"
+          ],
+          "default": "self"
+        }
+      }
+    },
+    "boardSquare": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-s](1[0-9]|[1-9])$"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      ]
+    },
+    "board": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "rows",
+        "cols",
+        "pieces",
+        "answer"
+      ],
+      "properties": {
+        "type": {
+          "const": "board"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 19
+        },
+        "cols": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 19
+        },
+        "grid": {
+          "type": "string",
+          "enum": [
+            "squares",
+            "intersections"
+          ],
+          "default": "squares"
+        },
+        "theme": {
+          "type": "string",
+          "enum": [
+            "checkered",
+            "plain",
+            "wood"
+          ]
+        },
+        "coordinates": {
+          "type": "string",
+          "enum": [
+            "algebraic",
+            "none"
+          ],
+          "default": "algebraic"
+        },
+        "orientation": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "flipped"
+          ],
+          "default": "normal"
+        },
+        "pieces": {
+          "type": "array",
+          "maxItems": 400,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "at"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "glyph"
+                ]
+              },
+              {
+                "required": [
+                  "sprite"
+                ]
+              }
+            ],
+            "properties": {
+              "at": {
+                "$ref": "#/$defs/boardSquare"
+              },
+              "glyph": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2
+              },
+              "sprite": {
+                "$ref": "#/$defs/assetImage"
+              },
+              "color": {
+                "$ref": "#/$defs/color"
+              }
+            }
+          }
+        },
+        "answer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "accept"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "square",
+                "squares",
+                "move"
+              ]
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 64,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-s](1[0-9]|[1-9])(-?[a-s](1[0-9]|[1-9])[qrbn]?)?$"
+              }
+            }
+          }
+        },
+        "marks": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "at",
+              "kind"
+            ],
+            "properties": {
+              "at": {
+                "$ref": "#/$defs/boardSquare"
+              },
+              "to": {
+                "$ref": "#/$defs/boardSquare"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "circle",
+                  "square",
+                  "arrow"
+                ]
+              },
+              "color": {
+                "$ref": "#/$defs/color"
+              }
+            }
+          }
+        }
+      }
+    },
+    "pitch": {
+      "type": "string",
+      "pattern": "^[A-G](#|b)?[0-8]$"
+    },
+    "instrument": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "piano"
+          ]
+        },
+        "samples": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 24,
+          "propertyNames": {
+            "pattern": "^[A-G](#|b)?[0-8]$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/assetAudio"
+          }
+        },
+        "range": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pitch"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
+    "score": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "abc"
+      ],
+      "properties": {
+        "type": {
+          "const": "score"
+        },
+        "abc": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 8000
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "play": {
+          "type": "boolean",
+          "default": true
+        },
+        "tempo": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 240
+        },
+        "tempoRange": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 240
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "transpose": {
+          "type": "integer",
+          "minimum": -12,
+          "maximum": 12
+        },
+        "highlight": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "from",
+              "to"
+            ],
+            "properties": {
+              "from": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "to": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "label": {
+                "$ref": "#/$defs/inlineMarkdown"
+              }
+            }
+          }
+        },
+        "follow": {
+          "type": "boolean",
+          "default": true
+        },
+        "instrument": {
+          "$ref": "#/$defs/instrument"
+        },
+        "answer": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "accept"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "note",
+                    "notes"
+                  ]
+                },
+                "accept": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 32,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9]+:[0-9]+$"
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "accept"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "bar"
+                },
+                "accept": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 32,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "accept"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "text"
+                },
+                "accept": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 12,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "keyboard": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "answer"
+      ],
+      "properties": {
+        "type": {
+          "const": "keyboard"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "range": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pitch"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "labels": {
+          "type": "string",
+          "enum": [
+            "none",
+            "c-only",
+            "all"
+          ],
+          "default": "c-only"
+        },
+        "answer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "accept"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "keys",
+                "sequence"
+              ]
+            },
+            "accept": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 24,
+                "items": {
+                  "$ref": "#/$defs/pitch"
+                }
+              }
+            }
+          }
+        },
+        "given": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/pitch"
+          }
+        },
+        "showAnswerAs": {
+          "type": "string",
+          "enum": [
+            "keys",
+            "score",
+            "both"
+          ],
+          "default": "keys"
+        },
+        "octaveTolerant": {
+          "type": "boolean",
+          "default": false
+        },
+        "instrument": {
+          "$ref": "#/$defs/instrument"
+        }
+      }
+    },
+    "region": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "shape",
+        "at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,40}$"
+        },
+        "label": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "description": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "shape": {
+          "type": "string",
+          "enum": [
+            "circle",
+            "rect",
+            "polygon"
+          ]
+        },
+        "at": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 64,
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "hotspot": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "image",
+        "alt",
+        "prompt",
+        "regions"
+      ],
+      "properties": {
+        "type": {
+          "const": "hotspot"
+        },
+        "image": {
+          "$ref": "#/$defs/assetImage"
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "regions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 40,
+          "items": {
+            "$ref": "#/$defs/region"
+          }
+        },
+        "answer": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "accept"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "click",
+                    "clicks"
+                  ]
+                },
+                "accept": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 40,
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "label"
+                }
+              }
+            }
+          ]
+        },
+        "showLabels": {
+          "type": "string",
+          "enum": [
+            "never",
+            "after",
+            "always"
+          ],
+          "default": "after"
+        },
+        "outline": {
+          "type": "string",
+          "enum": [
+            "always",
+            "hover",
+            "never"
+          ],
+          "default": "hover"
+        }
+      }
+    },
+    "tableCell": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "answer"
+          ],
+          "properties": {
+            "answer": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0
+            },
+            "alternatives": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "unit": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "tableInput": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "columns",
+        "cells"
+      ],
+      "properties": {
+        "type": {
+          "const": "table-input"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/inlineMarkdown"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": {
+            "$ref": "#/$defs/inlineMarkdown"
+          }
+        },
+        "cells": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 12,
+            "items": {
+              "$ref": "#/$defs/tableCell"
+            }
+          }
+        },
+        "caption": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "type",
+            "choose"
+          ],
+          "default": "type"
+        },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 12,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "graded": {
+      "type": "object",
+      "properties": {
+        "hint": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "explanation": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "maxAttempts": false,
+        "solutionAfterAttempts": {
+          "type": "integer",
+          "minimum": -1,
+          "default": 3
+        }
+      }
+    },
+    "molecule": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "molecule"
+        },
+        "smiles": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "name": {
+          "$ref": "#/$defs/inlineMarkdown"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "reaction": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "showFormula": {
+          "type": "boolean",
+          "default": false
+        },
+        "highlight": {
+          "type": "array",
+          "maxItems": 40,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "answer": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "accept"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "atom",
+                    "atoms"
+                  ]
+                },
+                "accept": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 40,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "accept"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "text"
+                },
+                "accept": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 12,
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "smiles"
+          ]
+        },
+        {
+          "required": [
+            "reaction"
+          ]
+        }
+      ]
+    },
+    "simulation": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "$ref": "#/$defs/graded"
+        }
+      ],
+      "required": [
+        "type",
+        "prompt",
+        "state",
+        "step"
+      ],
+      "properties": {
+        "type": {
+          "const": "simulation"
+        },
+        "prompt": {
+          "$ref": "#/$defs/blockMarkdown"
+        },
+        "state": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 20,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_]{0,20}$"
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "step": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 20,
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_]{0,20}$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/expression"
+          }
+        },
+        "dt": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "default": 0.05
+        },
+        "params": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "min",
+              "max"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z_][a-zA-Z0-9_]{0,20}$"
+              },
+              "label": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              },
+              "step": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "default": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "stopWhen": {
+          "$ref": "#/$defs/expression"
+        },
+        "readouts": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "expr"
+            ],
+            "properties": {
+              "label": {
+                "$ref": "#/$defs/inlineMarkdown"
+              },
+              "expr": {
+                "$ref": "#/$defs/expression"
+              },
+              "precision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 6
+              },
+              "unit": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "trace": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "x",
+            "series"
+          ],
+          "properties": {
+            "x": {
+              "$ref": "#/$defs/expression"
+            },
+            "y": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "series": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "expr"
+                ],
+                "properties": {
+                  "expr": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "label": {
+                    "$ref": "#/$defs/inlineMarkdown"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "scene": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "shapes"
+          ],
+          "properties": {
+            "viewBox": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "shapes": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "items": {
+                "type": "object",
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "circle",
+                      "rect",
+                      "line",
+                      "text"
+                    ]
+                  },
+                  "repeat": {
+                    "type": [
+                      "integer",
+                      "string"
+                    ]
+                  },
+                  "cx": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "cy": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "r": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "x": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "y": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "w": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "h": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "x1": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "y1": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "x2": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "y2": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "color": {
+                    "$ref": "#/$defs/color"
+                  },
+                  "opacity": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "width": {
+                    "$ref": "#/$defs/expression"
+                  },
+                  "when": {
+                    "$ref": "#/$defs/expression"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "autoplay": {
+          "type": "boolean",
+          "default": false
+        },
+        "answer": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "accept"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "text"
+                },
+                "accept": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 12,
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "answer"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "numeric"
+                },
+                "answer": {
+                  "type": "number"
+                },
+                "tolerance": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        }
+      }
+    }
+  }
+}

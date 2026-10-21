@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace = "courses.tome.app"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "courses.tome.app"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "0.1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    // Release signing with the upload key (see PUBLISHING: step B3). The key never lives in the repository: it is
+    // read from environment variables, which the GitHub release workflow fills from repository secrets, or from a
+    // local keystore.properties next to this file (git-ignored).
+    signingConfigs {
+        release {
+            def props = new Properties()
+            def local = rootProject.file('keystore.properties')
+            if (local.exists()) local.withInputStream { props.load(it) }
+            def storePath = System.getenv('TOME_UPLOAD_STORE_FILE') ?: props.getProperty('storeFile')
+            if (storePath) {
+                storeFile file(storePath)
+                storePassword System.getenv('TOME_UPLOAD_STORE_PASSWORD') ?: props.getProperty('storePassword')
+                keyAlias System.getenv('TOME_UPLOAD_KEY_ALIAS') ?: props.getProperty('keyAlias')
+                keyPassword System.getenv('TOME_UPLOAD_KEY_PASSWORD') ?: props.getProperty('keyPassword')
+            }
+        }
+    }
+    buildTypes {
+        release {
+            if (signingConfigs.release.storeFile) signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

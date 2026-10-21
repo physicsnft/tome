@@ -1,0 +1,44 @@
+{
+  "formatVersion": "1.0.0-rc.1",
+  "id": "courses.tome.chess-tactics",
+  "version": "0.1.3",
+  "title": "Chess Tactics: Forks and Pins",
+  "subtitle": "The two patterns that win most amateur games",
+  "description": "Learn to spot and play forks and pins. Every position is a puzzle: find the square, make the move. Assumes you know how the pieces move.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "chess",
+    "games"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 40,
+  "assetsByAuthor": true,
+  "cover": "assets/images/cover.png",
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "forks",
+      "title": "Forks",
+      "lessons": [
+        "lessons/01-the-fork.md"
+      ]
+    },
+    {
+      "id": "pins",
+      "title": "Pins",
+      "lessons": [
+        "lessons/02-the-pin.md"
+      ]
+    }
+  ],
+  "contentHashes": {
+    "assets/images/cover.png": "sha256:07604d397cc4f162c344273b752035aa651365f9e79219d7bc3ec9bc53e94a83",
+    "lessons/01-the-fork.md": "sha256:845bcc3daf012ead204b0b68c38f5980d2ab3f5758b1e9467608b2c6818213fa",
+    "lessons/02-the-pin.md": "sha256:1e7df05117a3a280e967eff51d189840dd6e53c70735f9bbc9872db43e5ff0bf"
+  }
+}

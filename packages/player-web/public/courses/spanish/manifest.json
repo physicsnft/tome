@@ -1,0 +1,101 @@
+{
+  "formatVersion": "1.0.0-rc.1",
+  "id": "courses.tome.spanish-cafe",
+  "version": "0.1.2",
+  "title": "Español: En el café",
+  "subtitle": "Listen, speak and order your first coffee",
+  "description": "A short listening-first introduction to Spanish. You will hear greetings and café conversations, write down what you hear, and record yourself ordering. Audio in this preview is synthesised; a published course would use native speakers.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "language",
+    "spanish",
+    "listening"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 45,
+  "assetsByAuthor": true,
+  "credits": [
+    {
+      "asset": "assets/audio/hola.mp3",
+      "title": "Spanish audio clips (40 files)",
+      "creator": "Synthesised with Piper, voice es-carlfm-x-low",
+      "source": "https://github.com/rhasspy/piper",
+      "license": "Voice trained on a public-domain dataset; not a recording of any person",
+      "modified": "Placeholder audio for this sample course — a published language course uses native-speaker recordings"
+    }
+  ],
+  "cover": "assets/images/cover.png",
+  "uses": [
+    "audio",
+    "microphone"
+  ],
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "saludos",
+      "title": "Greetings",
+      "lessons": [
+        "lessons/01-saludos.md"
+      ]
+    },
+    {
+      "id": "cafe",
+      "title": "At the café",
+      "lessons": [
+        "lessons/02-pedir.md",
+        "lessons/03-la-cuenta.md"
+      ]
+    }
+  ],
+  "contentHashes": {
+    "assets/audio/adios.mp3": "sha256:d02443ce282a04d3960862690b6ade519e69bc81eee3fccdf1b69ce305dd3a8f",
+    "assets/audio/agua.mp3": "sha256:99a0f35f5fabcd258cbfbf13f7ac09559a68d5bb667f41be64cc4218150e07bc",
+    "assets/audio/buenas-noches.mp3": "sha256:68cc1f0d5dd1e8dd48b80de3874aae6a05ead86e54df45ef928327397f6dd41d",
+    "assets/audio/buenas-tardes.mp3": "sha256:099a7845ec560b02637ace3816be89b181758968c00378e5973859574b921f09",
+    "assets/audio/buenos-dias.mp3": "sha256:45fbe6529cf8190b220d5bcecd111383cd2ef38e66ccf6b4839a4194fc27eb3d",
+    "assets/audio/cafe-con-leche.mp3": "sha256:55012adf38efe4f73e6d17d71ad0d13a0120e9125357d65076bf6af83b56ac8b",
+    "assets/audio/cafe.mp3": "sha256:366caee57119cc915bec0afee4f50a1d9bb26361654838e9fe84fd3f258ccc24",
+    "assets/audio/cerveza.mp3": "sha256:dfd4f1330d1a304439684c8f9b826bbcd7fb32fc2d62f0f6ca8dfef0fe32431b",
+    "assets/audio/cinco.mp3": "sha256:13e4ea2d11e61e99e171dbfa3b7a56199731f4e021f22ce995ac5f0c306a07d1",
+    "assets/audio/como-estas.mp3": "sha256:d8a55353d9023a13ba418bdbd44c1d3535abca705e45a7081657135d06ab3593",
+    "assets/audio/croissant.mp3": "sha256:497786b9871b232438d87924d62bc3ae79baae518ff332b2aac0b239a5697db0",
+    "assets/audio/cuatro.mp3": "sha256:fabda22fe9a9961844acf039d9e85739a6b89e2c13712f3c2429bb0bf9bb8320",
+    "assets/audio/de-nada.mp3": "sha256:46271ad2ee516116cd0558b25023c8a60ac98356f5b084449d0c7f7a00cbbf2d",
+    "assets/audio/dialogo-1.mp3": "sha256:61d70a06e7d129df7a451427167c3b92317b59a2c98af9fecfed310d29919f9e",
+    "assets/audio/dialogo-2.mp3": "sha256:bc65758edf95128c9e90eeef011c662d85079d240c5f99b3ae597dfc291bec11",
+    "assets/audio/dictado-1.mp3": "sha256:5196359d691f85d3d2ea2babba747b60f48c5c63d66d208e9341b257fa4e3331",
+    "assets/audio/dictado-2.mp3": "sha256:5c31860ee305ef9692a2f0444b7086d74a5a8bb83803f5ca950cf272a5338b5a",
+    "assets/audio/dictado-3.mp3": "sha256:151e944f70136e836dff04541eaae3e85ffc9c1a1c236c10c3792c3033f19c1e",
+    "assets/audio/diez.mp3": "sha256:401801f3b14ddb797080d7f8acd9b877016541ea19981349105f3d0e80ea695c",
+    "assets/audio/dos.mp3": "sha256:4efcb74b0f4ef559b640f8ea8a0d4d64ed8b4c7f96a4210b4d6c0dca6bf1edbd",
+    "assets/audio/gracias.mp3": "sha256:42a4d39e6ac483657c7da688b5ad2256be4fa2b7471880f67fbcf6b73d3fec39",
+    "assets/audio/hasta-luego.mp3": "sha256:4179d1920a6696add4443b449f122c713f12d983b0228089e70150cec721417a",
+    "assets/audio/hola.mp3": "sha256:ef747375d878475c4cfb810bf57e49364a44b2c1ebcf424ee922a802a3c6f5e7",
+    "assets/audio/la-cuenta.mp3": "sha256:bce5ecf57640d5eb001b7eaa3d495c6d8753eaf0d66b2d719ccf10ce3ecadba5",
+    "assets/audio/modelo-cuenta.mp3": "sha256:8f95f44400237a9356ecf5bd5972aa98cf05e077343ff931ea6b68c1f5f666b1",
+    "assets/audio/modelo-pedir.mp3": "sha256:8a733761ab1d950ed5fd98c702cea8059788d9e2b527d95e1c416395a76e22c4",
+    "assets/audio/muy-bien.mp3": "sha256:8c7498e6215ecf14df8ffc08d522cae7e65e79a9807bd1922be628d33fd59d7e",
+    "assets/audio/nueve.mp3": "sha256:d8b1a966ce97a0006c3d0dc9928226967fd42651a003da3fd4666225e397bcbb",
+    "assets/audio/ocho.mp3": "sha256:72e55603831aa9ab643b72a98c57d9a77fbe88149913288ff4c6fc542ed537cb",
+    "assets/audio/por-favor.mp3": "sha256:08c53984f2fd604a184c79e18c62c3766559790f666fb90d62d11e957454d670",
+    "assets/audio/precio-1.mp3": "sha256:c676b526f17cd1b5b422e711023182043ddb154ce5be7132f86ddd3bd78c93c7",
+    "assets/audio/precio-2.mp3": "sha256:a302fa581e5b686df7df202104bafb2dda31a7afbc71b13c2b5cf5248f078f3a",
+    "assets/audio/precio-3.mp3": "sha256:a2a198d9aed1df33d3183e864d3577267026a8ae7f5ed4791702276d4d61c07c",
+    "assets/audio/seis.mp3": "sha256:1d0d2146eac4a4f77fd04350423933d3f5e42dac24d8c9aeb15cde5a33937943",
+    "assets/audio/siete.mp3": "sha256:ca47e64fa3c49a387c2b93aa162fd2e71927c52b2eecf5c93e7ed2776b90b1eb",
+    "assets/audio/te.mp3": "sha256:bfc8b56ef2560faf28747a63b445756509a60b41126ebabe0fba729751d1e7fd",
+    "assets/audio/tostada.mp3": "sha256:41865e7939f2a2e481ab78680c0eaed06de564d4077a3dd5f220679425309a5c",
+    "assets/audio/tres.mp3": "sha256:f1c737eb9a08f29df4b1e9d9da194cd10242cc8611b8172e653015cddd2edfc5",
+    "assets/audio/uno.mp3": "sha256:d23d3f18bbe64363749dea64b41d7322b54deddd34a7568affa9bc8b5e2204fc",
+    "assets/audio/zumo.mp3": "sha256:56466186c18d283767a371df7aa1aa2097d56ab40d7be1061d3d4371375b40f2",
+    "assets/images/cover.png": "sha256:05e5107a4ba5afe416dbdceed693571235cdc38a0f952c15b55b4ab71c30f378",
+    "lessons/01-saludos.md": "sha256:58cf4763aed8e505999b775a200b3ee23e45caa400619f0135481e6a640b4ac0",
+    "lessons/02-pedir.md": "sha256:0e0d5ebfffcff916180abbe140dba0fa1601ad2efe6c0ff03898b8b8196f6d55",
+    "lessons/03-la-cuenta.md": "sha256:8420a153e4121af9c5736d0ca1af5a0b4cfbb044bc4d8bc4d6976223d4129456"
+  }
+}

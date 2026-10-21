@@ -1,0 +1,50 @@
+# Builds the signed App Bundle (.aab) to upload to Google Play. Run it by hand: Actions → "Android release" →
+# Run workflow. It needs four repository secrets (Settings → Secrets and variables → Actions):
+#   TOME_UPLOAD_KEYSTORE_BASE64  the upload keystore file, base64-encoded (see PUBLISHING, step B3)
+#   TOME_UPLOAD_STORE_PASSWORD   its password
+#   TOME_UPLOAD_KEY_ALIAS        the key's alias, e.g. "upload"
+#   TOME_UPLOAD_KEY_PASSWORD     the key's password
+# Optional repository variables: VITE_FREE_PREVIEW = true for the free preview (every course free, no server),
+# VITE_API = the platform server's address once it exists. Both are built into the app.
+name: Android release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  aab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+      - run: npm ci
+      - name: Build the web player
+        run: npm run build -w @tome/player-web
+        env:
+          VITE_API: ${{ vars.VITE_API }}
+          VITE_FREE_PREVIEW: ${{ vars.VITE_FREE_PREVIEW }}
+      - name: Copy it into the Android project
+        working-directory: packages/player-web
+        run: npx cap sync android
+      - name: Restore the upload key
+        run: echo "${{ secrets.TOME_UPLOAD_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/upload.jks"
+      - name: Build the signed App Bundle
+        working-directory: packages/player-web/android
+        env:
+          TOME_UPLOAD_STORE_FILE: ${{ runner.temp }}/upload.jks
+          TOME_UPLOAD_STORE_PASSWORD: ${{ secrets.TOME_UPLOAD_STORE_PASSWORD }}
+          TOME_UPLOAD_KEY_ALIAS: ${{ secrets.TOME_UPLOAD_KEY_ALIAS }}
+          TOME_UPLOAD_KEY_PASSWORD: ${{ secrets.TOME_UPLOAD_KEY_PASSWORD }}
+        run: chmod +x gradlew && ./gradlew bundleRelease --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tome-release-aab
+          path: packages/player-web/android/app/build/outputs/bundle/release/app-release.aab

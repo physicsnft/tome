@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.example.com/course/0.2/signature.schema.json",
+  "title": "Bundle Signature",
+  "description": "Schema for signature.json (Course Format Spec 0.2.x, \u00a74).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "algorithm",
+    "keyId",
+    "signedAt",
+    "manifestHash",
+    "signature"
+  ],
+  "properties": {
+    "algorithm": {
+      "type": "string",
+      "const": "Ed25519"
+    },
+    "keyId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+$",
+      "maxLength": 64
+    },
+    "signedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "manifestHash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "signature": {
+      "type": "string",
+      "description": "Base64 (standard, padded) Ed25519 signature over the raw bytes of manifest.json \u2014 64 bytes \u2192 88 chars.",
+      "pattern": "^[A-Za-z0-9+/]{86}==$"
+    },
+    "publicKey": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Hex Ed25519 public key of the signer (\u00a74). Lets a player check an author's own signature; a platform signature is always checked against the pinned key instead."
+    }
+  }
+}

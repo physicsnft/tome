@@ -1,0 +1,60 @@
+{
+  "formatVersion": "1.0.0-rc.1",
+  "id": "courses.tome.sketching-basics",
+  "version": "0.1.2",
+  "title": "Sketching: Learning to See",
+  "subtitle": "Lines, ellipses and your first object, drawn on the page",
+  "description": "A hands-on start to drawing. You draw directly in the lesson: straight lines, ellipses, then a mug and an apple from reference. Every exercise lets you compare your sketch with the instructor's. Best with a stylus on a tablet or a desktop with a mouse; usable on a phone with a finger.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "art",
+    "drawing"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 60,
+  "assetsByAuthor": true,
+  "cover": "assets/images/cover.png",
+  "bestOn": [
+    "tablet",
+    "desktop"
+  ],
+  "uses": [
+    "drawing"
+  ],
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "marks",
+      "title": "Making marks",
+      "lessons": [
+        "lessons/01-lines.md",
+        "lessons/02-ellipses.md"
+      ]
+    },
+    {
+      "id": "objects",
+      "title": "Objects",
+      "lessons": [
+        "lessons/03-the-mug.md"
+      ]
+    }
+  ],
+  "contentHashes": {
+    "assets/images/cover.png": "sha256:e3c77aee0f13f012331634c30879baea44026296d3ebad5aca84a46ef5613a32",
+    "assets/images/model-apple.png": "sha256:a8ef698bb19069719ca2d369ed62ba3284e4c1397d5e8dbd98a3cc23d37e64c2",
+    "assets/images/model-mug.png": "sha256:acec9ddb3f5176a0e26bb4fa4f2047fb48130500d57c64f80fb65296dcd088b1",
+    "assets/images/ref-apple.png": "sha256:45f87761da23d3b5e6194601fd0297bd27ab690affc0bb4687e90fe7e4210c5a",
+    "assets/images/ref-mug.png": "sha256:568e407552776f0bf5ce565bea657100db693ce76bc7db1aff6a768c9c642414",
+    "assets/images/trace-ellipses.png": "sha256:02e030be7640e5371a53f75d3762977998ff77ed221e6a62c6229f4945d68c5e",
+    "assets/images/trace-lines.png": "sha256:fa0b9011f32c076b304c775bbc74d32757453ae4fe4ed89a2cae610ee9942ba7",
+    "assets/images/trace-mug.png": "sha256:b7662e45e7202c1b3b3a046dce5c29409a9710070629940c3dbbb8d74b702944",
+    "lessons/01-lines.md": "sha256:9e95f0eb79485c411574228b901ee51074b96ece01e3c3d208ab8610c635ef17",
+    "lessons/02-ellipses.md": "sha256:93a45f48a8dddc5b0a5ba1f4aeb9a2cc149bbb73b4f2627cbbaf784b4e20e5fa",
+    "lessons/03-the-mug.md": "sha256:e7391478db4153535937b35003008623c9f092677d9cd0e60f8afb4e613c8ee8"
+  }
+}

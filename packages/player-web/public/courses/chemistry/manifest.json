@@ -1,0 +1,46 @@
+{
+  "formatVersion": "1.0.0-rc.1",
+  "id": "courses.tome.molecules-and-rates",
+  "version": "0.1.2",
+  "title": "Molecules and Rates",
+  "subtitle": "Structures you can read, reactions you can watch",
+  "description": "A short chemistry course in two halves. First, reading structural formulas: functional groups, isomers, and what a drawing of a molecule actually tells you. Then rates: run a model of a reaction, change the conditions, and see what happens to the concentrations. Structures are drawn from SMILES and models are declarative — nothing in this course is a video.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "chemistry",
+    "science"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 55,
+  "assetsByAuthor": true,
+  "cover": "assets/images/cover.png",
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "structures",
+      "title": "Reading structures",
+      "lessons": [
+        "lessons/01-structures.md",
+        "lessons/02-groups.md"
+      ]
+    },
+    {
+      "id": "rates",
+      "title": "Rates and equilibrium",
+      "lessons": [
+        "lessons/03-rates.md"
+      ]
+    }
+  ],
+  "contentHashes": {
+    "assets/images/cover.png": "sha256:654c63a1fb19249e7ae1f231bac7150519928675909fb08b01cbab1dbd549eff",
+    "lessons/01-structures.md": "sha256:2ba6d27e490c327cebcc73e42896d3cdbdf4e22185755184880a41b5b224701a",
+    "lessons/02-groups.md": "sha256:b39ed1d489c7c501bdd8356518333a756631c2a370ccd95b197d45a64901b76a",
+    "lessons/03-rates.md": "sha256:2269e1195e2815d512104b4a0a0d548de5d456d4a0f6e5d27bde34d2793cc192"
+  }
+}

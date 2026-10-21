@@ -1,0 +1,20 @@
+# Response headers for static hosts that read this file (Cloudflare Pages, Netlify).
+# The page and the offline worker must never be cached by the browser, or updates would not arrive.
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/sw.js
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+# Scripts, styles and fonts have their content hash in the file name, so they can be cached for a year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+# Course files: their own type, so Android offers Tome to open them.
+/bundles/*
+  Content-Type: application/vnd.tome.course
+  Content-Disposition: attachment
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

@@ -1,0 +1,25 @@
+{
+  "name": "tome",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @tome/player-web",
+    "build": "npm run build -w @tome/core && npm run build -w @tome/player-web && npm run build -w @tome-courses/cli",
+    "validate": "node packages/cli/dist/index.js validate",
+    "check-docs": "tsx packages/cli/src/index.ts check-docs docs/AUTHORING.md docs/SPEC.md",
+    "test": "npm run build:cli && npm run check-docs && tsx packages/player-web/test/review.test.ts && tsx scripts/license.test.ts && node scripts/field-audit.mjs && node scripts/smoke.mjs && node tools/build-site-docs.mjs --check",
+    "build:cli": "npm run build -w @tome/player-web && npm run build -w @tome-courses/cli",
+    "pack:cli": "npm run build:cli && npm pack -w @tome-courses/cli",
+    "android": "npm run build -w @tome/player-web && cd packages/player-web && npx cap sync android && npx cap open android",
+    "android:sync": "npm run build -w @tome/player-web && cd packages/player-web && npx cap sync android",
+    "site": "node tools/build-site-docs.mjs && node scripts/fingerprint-site-images.mjs",
+    "build:app-preview": "npm run build -w @tome/core && npm run build:free -w @tome/player-web",
+    "sign-store": "node scripts/sign-store.mjs"
+  },
+  "devDependencies": {
+    "marked": "^12.0.2"
+  },
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,53 @@
+{
+  "formatVersion": "1.0.0-rc.2",
+  "id": "courses.tome.reading-the-ecg",
+  "version": "0.1.2",
+  "title": "Reading the ECG",
+  "subtitle": "Rate, rhythm and intervals, one strip at a time",
+  "description": "A systematic first pass at the 12-lead ECG: name the waves, measure the intervals, calculate the rate, and recognise five rhythms. Every trace in this course is computer-generated for teaching, not a recording of a patient. This is educational material and not a clinical decision aid.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "medicine",
+    "cardiology"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 55,
+  "cover": "assets/images/cover.png",
+  "assetsByAuthor": true,
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "waves",
+      "title": "The waves and the paper",
+      "lessons": [
+        "lessons/01-the-complex.md",
+        "lessons/02-intervals.md"
+      ]
+    },
+    {
+      "id": "rhythm",
+      "title": "Rate and rhythm",
+      "lessons": [
+        "lessons/03-rate-and-rhythm.md"
+      ]
+    }
+  ],
+  "contentHashes": {
+    "assets/images/block-first-degree.svg": "sha256:9904077ff40e589d51df1476da58409cf5b8639c275cbbb239ddce55897f91ec",
+    "assets/images/complex-normal.svg": "sha256:c9e47ba5516664a78e27b576920439f7dd8198a9e43cc3f42e069e3103bc8235",
+    "assets/images/cover.png": "sha256:841c2d69ac7e54cb1f384c98c47e9c2b87bdc03f091cc01fb4fb343b41aa6b68",
+    "assets/images/rhythm-af.svg": "sha256:298fc794fb8ab2b42bb888b7ebfea922caf9547c8d4e5bd2f0ffa42e7d6acedd",
+    "assets/images/rhythm-brady.svg": "sha256:8ea737864b32b769b050b135ceae40c462d4dd3a322b882f7ef4b01873888a58",
+    "assets/images/rhythm-normal.svg": "sha256:3001a35fa3eab1dedc506f18ec5c1594cb104d3671bb8314b676c023b28a70d8",
+    "assets/images/rhythm-tachy.svg": "sha256:ae26829b529ddf9842d809eec4e9d7018bc513af7467eb5b1f88f232370296b2",
+    "assets/images/st-elevation.svg": "sha256:a7668711fc3c02dfda7f79e54031623e2b53886ae1948b19a99fa5330106abc1",
+    "lessons/01-the-complex.md": "sha256:3a1392de1925ba103e53542ed8c8a0664f32769b30c0cc9ab5753fadf4d05c61",
+    "lessons/02-intervals.md": "sha256:751c7be645081003ae74ec96950688287508255ca0920ae8d11102f705a9c295",
+    "lessons/03-rate-and-rhythm.md": "sha256:4fa78af5adc88ebd4d670649380ae0d493a398fa864d77174d9bd6189af44b38"
+  }
+}

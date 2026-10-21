@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover: the installed app draws behind the phone's navigation bar, so that strip takes the app's own colour; the bars keep clear of it with env(safe-area-inset-*) in styles.css. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- Installable: "Add to Home Screen" on iPhone, "Install app" on Android and desktop. Offline via /sw.js. -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Tome" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Tome — your courses, for keeps</title>
+    <!-- Apply the light/dark choice before anything paints, so dark mode never flashes white. See src/lib/theme.ts. -->
+    <script>
+      (function () {
+        var p = null; try { p = localStorage.getItem('tome.theme'); } catch (e) {}
+        var dark = p === 'dark' || (p !== 'light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+        var r = document.documentElement; r.dataset.theme = dark ? 'dark' : 'light'; r.style.colorScheme = dark ? 'dark' : 'light';
+        var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', dark ? '#1a1e29' : '#ffffff');
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "name": "Tome — courses you keep",
+  "short_name": "Tome",
+  "description": "Courses you keep: they work offline, on every device.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#1a1e29",
+  "background_color": "#1a1e29",
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "application/vnd.tome.course": [
+          ".course"
+        ]
+      },
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ],
+      "launch_type": "single-client"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

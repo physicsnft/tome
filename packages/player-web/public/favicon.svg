@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Tome: a white book with an amber bookmark on indigo — the same mark as the app icon (tools/gen_android_icons.py). -->
+  <rect width="64" height="64" rx="14" fill="#2b4acb"/>
+  <rect x="17.9" y="13.2" width="28.2" height="37.6" rx="3" fill="#fff"/>
+  <path d="M20.9 13.2h5.5v37.6h-5.5a3 3 0 0 1-3-3V16.2a3 3 0 0 1 3-3z" fill="#d6ddf7"/>
+  <path d="M35.8 13.2h5.3v17.8l-2.65-3.2-2.65 3.2z" fill="#c26a00"/>
+</svg>

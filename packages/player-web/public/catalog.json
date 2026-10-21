@@ -1,0 +1,143 @@
+[
+  {
+    "courseId": "courses.tome.cells-and-heredity",
+    "dir": "biology",
+    "title": "Cells & Heredity",
+    "subtitle": "Inside the cell, and how traits are passed on",
+    "priceCents": 1400,
+    "currency": "EUR",
+    "bundleUrl": "/bundles/courses.tome.cells-and-heredity-0.1.2.course",
+    "cover": "/courses/biology/assets/images/cover.png?v=49250fc5",
+    "sizeBytes": 32188,
+    "version": "0.1.2",
+    "authors": [
+      "Tome"
+    ],
+    "tags": [
+      "biology",
+      "science"
+    ],
+    "description": "A short first biology course. Label the parts of a cell, read a leaf in cross-section, and work Punnett squares to predict what the offspring will look like. All diagrams are drawn for this course.",
+    "level": "beginner",
+    "minutes": 50,
+    "changelog": "Author shown as Tome."
+  },
+  {
+    "courseId": "courses.tome.chess-tactics",
+    "dir": "chess",
+    "title": "Chess Tactics: Forks and Pins",
+    "subtitle": "The two patterns that win most amateur games",
+    "priceCents": 900,
+    "currency": "EUR",
+    "bundleUrl": "/bundles/courses.tome.chess-tactics-0.1.3.course",
+    "cover": "/courses/chess/assets/images/cover.png?v=3566d3d6",
+    "sizeBytes": 49262,
+    "version": "0.1.3",
+    "changelog": "Author shown as Tome.",
+    "authors": [
+      "Tome"
+    ],
+    "tags": [
+      "chess",
+      "games"
+    ],
+    "description": "Learn to spot and play forks and pins. Every position is a puzzle: find the square, make the move. Assumes you know how the pieces move.",
+    "level": "beginner",
+    "minutes": 40
+  },
+  {
+    "courseId": "courses.tome.molecules-and-rates",
+    "dir": "chemistry",
+    "title": "Molecules and Rates",
+    "subtitle": "Structures you can read, reactions you can watch",
+    "priceCents": 1600,
+    "currency": "EUR",
+    "bundleUrl": "/bundles/courses.tome.molecules-and-rates-0.1.2.course",
+    "cover": "/courses/chemistry/assets/images/cover.png?v=654c63a1",
+    "sizeBytes": 25175,
+    "version": "0.1.2",
+    "authors": [
+      "Tome"
+    ],
+    "tags": [
+      "chemistry",
+      "science"
+    ],
+    "description": "A short chemistry course in two halves. First, reading structural formulas: functional groups, isomers, and what a drawing of a molecule actually tells you. Then rates: run a model of a reaction, change the conditions, and see what happens to the concentrations. Structures are drawn from SMILES and models are declarative — nothing in this course is a video.",
+    "level": "beginner",
+    "minutes": 55,
+    "changelog": "Author shown as Tome."
+  },
+  {
+    "courseId": "courses.tome.python-first-steps",
+    "dir": "python",
+    "title": "Python: First Steps",
+    "subtitle": "From print() to your first loops",
+    "priceCents": 1900,
+    "currency": "EUR",
+    "bundleUrl": "/bundles/courses.tome.python-first-steps-0.2.2.course",
+    "cover": "/courses/python/assets/images/cover.webp?v=9c318f25",
+    "sizeBytes": 28975,
+    "version": "0.2.2",
+    "authors": [
+      "Tome"
+    ],
+    "tags": [
+      "programming",
+      "python",
+      "beginner"
+    ],
+    "description": "Learn the fundamentals of Python by writing real programs in the built-in editor. Covers printing, variables and numbers, strings, conditionals and loops. Each lesson ends with coding exercises that are checked automatically.",
+    "level": "beginner",
+    "minutes": 60,
+    "changelog": "Author shown as Tome."
+  },
+  {
+    "courseId": "courses.tome.reading-music",
+    "dir": "music",
+    "title": "Reading Music: First Steps",
+    "subtitle": "The staff, the keyboard, and your first melodies",
+    "priceCents": 1800,
+    "currency": "EUR",
+    "bundleUrl": "/bundles/courses.tome.reading-music-0.1.2.course",
+    "cover": "/courses/music/assets/images/cover.png?v=49d36153",
+    "sizeBytes": 25289,
+    "version": "0.1.2",
+    "authors": [
+      "Tome"
+    ],
+    "tags": [
+      "music",
+      "theory"
+    ],
+    "description": "Learn to read notation and find the notes under your fingers. Every example plays; every exercise is answered on a keyboard or on the score itself. All music is in the public domain (traditional tunes, Beethoven, Bach). No instrument needed — a device with sound is enough.",
+    "level": "beginner",
+    "minutes": 55,
+    "changelog": "Author shown as Tome."
+  },
+  {
+    "courseId": "courses.tome.vectors-visually",
+    "dir": "vectors",
+    "title": "Vectors, Visually",
+    "subtitle": "Arrows, lengths and the dot product — with sliders",
+    "priceCents": 1200,
+    "currency": "EUR",
+    "bundleUrl": "/bundles/courses.tome.vectors-visually-0.2.2.course",
+    "cover": "/courses/vectors/assets/images/cover.webp?v=404a6332",
+    "sizeBytes": 27737,
+    "version": "0.2.2",
+    "authors": [
+      "Tome"
+    ],
+    "tags": [
+      "math",
+      "linear-algebra",
+      "vectors",
+      "beginner"
+    ],
+    "description": "A short, hands-on introduction to vectors in the plane. You will learn what a vector is, how to measure its length, how to add and scale vectors, and what the dot product tells you about the angle between them. Every idea comes with an interactive exploration and quick checks.",
+    "level": "beginner",
+    "minutes": 50,
+    "changelog": "Author shown as Tome."
+  }
+]

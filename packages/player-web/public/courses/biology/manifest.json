@@ -1,0 +1,48 @@
+{
+  "formatVersion": "1.0.0-rc.1",
+  "id": "courses.tome.cells-and-heredity",
+  "version": "0.1.2",
+  "title": "Cells & Heredity",
+  "subtitle": "Inside the cell, and how traits are passed on",
+  "description": "A short first biology course. Label the parts of a cell, read a leaf in cross-section, and work Punnett squares to predict what the offspring will look like. All diagrams are drawn for this course.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "biology",
+    "science"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 50,
+  "assetsByAuthor": true,
+  "cover": "assets/images/cover.png",
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "cells",
+      "title": "Cells",
+      "lessons": [
+        "lessons/01-the-cell.md",
+        "lessons/02-the-leaf.md"
+      ]
+    },
+    {
+      "id": "heredity",
+      "title": "Heredity",
+      "lessons": [
+        "lessons/03-punnett-squares.md"
+      ]
+    }
+  ],
+  "contentHashes": {
+    "assets/images/animal-cell.svg": "sha256:7a40ceca28419b0cc57a845dbcb28d834b7d02f33a81329af28b2174daeb90d9",
+    "assets/images/cover.png": "sha256:49250fc5a54d15fee80115490268cdc42cdb1f3c1c710aa4e8dbb3db4b9fb6f7",
+    "assets/images/leaf-cross-section.png": "sha256:1bd21514fe2193ed2256646b6e0a59af7c9f57fe486f1484ceba37b8f4b43d4a",
+    "lessons/01-the-cell.md": "sha256:dafff18eeee97895dc2f71ffe58c752ba492b9d41318347fff46e05ae99e27c7",
+    "lessons/02-the-leaf.md": "sha256:5e9293f76fd175307563c78c14b7cbe6efd923f064f4a859b628c76a7788c9d5",
+    "lessons/03-punnett-squares.md": "sha256:e8587bba29e5de2ed5231580399363a8cf54f7844d0b4f730634383057089dbd"
+  }
+}

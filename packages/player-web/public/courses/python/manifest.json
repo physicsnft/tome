@@ -1,0 +1,50 @@
+{
+  "formatVersion": "1.0.0-rc.1",
+  "id": "courses.tome.python-first-steps",
+  "version": "0.2.2",
+  "title": "Python: First Steps",
+  "subtitle": "From print() to your first loops",
+  "description": "Learn the fundamentals of Python by writing real programs in the built-in editor. Covers printing, variables and numbers, strings, conditionals and loops. Each lesson ends with coding exercises that are checked automatically.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "programming",
+    "python",
+    "beginner"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 60,
+  "assetsByAuthor": true,
+  "cover": "assets/images/cover.webp",
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "getting-started",
+      "title": "Getting Started",
+      "lessons": [
+        "lessons/01-hello-python.md",
+        "lessons/02-variables-and-numbers.md"
+      ]
+    },
+    {
+      "id": "text-and-control",
+      "title": "Text and Control Flow",
+      "lessons": [
+        "lessons/03-strings-and-input.md",
+        "lessons/04-decisions-and-loops.md"
+      ]
+    }
+  ],
+  "license": "CC-BY-4.0",
+  "contentHashes": {
+    "assets/images/cover.webp": "sha256:d60bd478c96b54226caa562409f7e1dc7b982c356027947b60c216678fd60d00",
+    "lessons/01-hello-python.md": "sha256:429757c675d4d5eafa932415d59b0ff0c568fe67938816767b4a21435c99432e",
+    "lessons/02-variables-and-numbers.md": "sha256:bd89228bac422447049e358a45526efa4dce564a1fd8ac8fac58caeea2be3714",
+    "lessons/03-strings-and-input.md": "sha256:57c6cfc0a7dca681d7a5b0039bfe9f882f87b40aa808e367d123a5df464913f3",
+    "lessons/04-decisions-and-loops.md": "sha256:1021223b8660c6646e9201a2d01f2deba449417ee9249b888b46cf0603cd63e8"
+  }
+}

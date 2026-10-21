@@ -1,0 +1,52 @@
+{
+  "formatVersion": "1.0.0-rc.1",
+  "id": "courses.tome.vectors-visually",
+  "version": "0.2.2",
+  "title": "Vectors, Visually",
+  "subtitle": "Arrows, lengths and the dot product — with sliders",
+  "description": "A short, hands-on introduction to vectors in the plane. You will learn what a vector is, how to measure its length, how to add and scale vectors, and what the dot product tells you about the angle between them. Every idea comes with an interactive exploration and quick checks.",
+  "language": "en",
+  "authors": [
+    {
+      "name": "Tome"
+    }
+  ],
+  "tags": [
+    "math",
+    "linear-algebra",
+    "vectors",
+    "beginner"
+  ],
+  "level": "beginner",
+  "estimatedMinutes": 50,
+  "assetsByAuthor": true,
+  "cover": "assets/images/cover.webp",
+  "changelog": "Author shown as Tome.",
+  "structure": [
+    {
+      "id": "basics",
+      "title": "Vector Basics",
+      "lessons": [
+        "lessons/01-what-is-a-vector.md",
+        "lessons/02-length.md"
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "Operations",
+      "lessons": [
+        "lessons/03-adding-and-scaling.md",
+        "lessons/04-dot-product.md"
+      ]
+    }
+  ],
+  "license": "CC-BY-4.0",
+  "contentHashes": {
+    "assets/images/cover.webp": "sha256:9ec040c3dc45fba8f6866455cb2ffce89feb9b67a55537e5534cfae6923b1f8c",
+    "assets/images/vector-3-4.svg": "sha256:7e353f5e4d0876c17903702d3f91e5b259c45b597dcef940424f9d6781b999a0",
+    "lessons/01-what-is-a-vector.md": "sha256:a2a3e97d8d28f90341709c0d3cd6c29a46c29aed0902bf542feaea246f301838",
+    "lessons/02-length.md": "sha256:4042ad45efaed8280b19d86f9efe599411c90abc90ec6a8488c35eef887e1c2a",
+    "lessons/03-adding-and-scaling.md": "sha256:0919a78f9b71c3da10ac329a76a50e431fb8087b8f867ea93e3865f9fc8c391c",
+    "lessons/04-dot-product.md": "sha256:7cca6176548b3508e4e5f1c30575ac16846840d16a2dfdef0666a318d68c9c54"
+  }
+}

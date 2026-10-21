@@ -1,0 +1,13 @@
+{
+  "name": "@tome/server",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@tome/core": "*"
+  },
+  "license": "Apache-2.0"
+}

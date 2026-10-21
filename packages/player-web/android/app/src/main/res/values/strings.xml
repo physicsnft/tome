@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Tome</string>
+    <string name="title_activity_main">Tome</string>
+    <string name="package_name">courses.tome.app</string>
+    <string name="custom_url_scheme">courses.tome.app</string>
+</resources>

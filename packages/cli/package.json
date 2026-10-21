@@ -1,0 +1,36 @@
+{
+  "name": "@tome-courses/cli",
+  "version": "1.0.0-rc.9",
+  "description": "Create, validate, preview and sign Tome courses.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "bin": {
+    "tome": "./bin/tome.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "player",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "pyodide": "^0.26.2",
+    "smiles-drawer": "^2.4.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "keywords": [
+    "tome",
+    "courses",
+    "elearning",
+    "offline"
+  ]
+}
